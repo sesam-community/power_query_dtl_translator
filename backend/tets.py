@@ -47,7 +47,24 @@ def query_func():
 @app.route('/dtl_transform', methods=['GET'])
 def dtl_transform():
     global query
-    dtl_code = transform(query)
+    dtl_code = str()
+    dtl_prefix = '"transform": {"type": "dtl","rules":{"default": [["copy", "*"],'
+    dtl_postfix = ']}}'
+    words = query.split()
+    for i, word in enumerate(words):
+        if word[:5] == "Table":
+            command = word.split('.')[1].split('(')[0]
+            if command == "RemoveColumns":
+                property = words[i+1].split('"')[1]
+                dtl_code += '["remove", %s],' %property
+            if command == "TransformColumns":
+                property = words[i+2].split('"')[1]
+                dtl_code += '["remove", "%s"],' %property
+                dtl_code += '["add", %s, ["upper", _S.%s]],' %(property, property)
+    if dtl_code == str():
+        print("No transformations detected!")
+        sys.exit()
+    dtl_code = dtl_prefix + dtl_code + dtl_postfix
     return jsonify(dtl_code.json())
 
 
