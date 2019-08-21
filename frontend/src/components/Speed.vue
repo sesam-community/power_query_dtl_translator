@@ -7,7 +7,7 @@
         <br>
         <img v-if='isLoading' src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" alt="Loading GIF">
         <br>
-        <input v-if="isInputVis" id="dtlCode" :value="text.object">
+        <textarea v-if="isInputVis" id="dtlCode" v-model="text.object"></textarea>
     </div>
 </template>
 
@@ -45,7 +45,7 @@ export default {
                 // eslint-disable-next-line no-console
                 //console.log(data)
             this.isInputVis = true    
-            let dtlCode = data
+            this.text = data
             console.log(data)
             this.isLoading = false
             })
