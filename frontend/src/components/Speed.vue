@@ -1,27 +1,13 @@
 <template>
     <div id="Speed" v-on:keyup.enter="insertData">
-        <h1>SESAM Config Diagnostics Center</h1>
-        <input name="tokenInput" ref='tokenInput' value="Type in your access token for Github Authentification">
+        <h1>Power Query to DTL Converter</h1>
+        <input name="pbiInput" ref='pbiInput' value="Paste in your Power Query code snippet here..." id="pbiInput">
         <br>
-        <button v-on:click.prevent="insertData">Submit token and perform scan</button>
+        <button v-on:click.prevent="insertData">Submit query and make DTL</button>
         <br>
         <img v-if='isLoading' src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" alt="Loading GIF">
-        <table v-if="isTableVis">
-        <thead>
-            <tr>
-                <th>Github repository</th>
-                <th>Created at</th>
-                <th>Latest push</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="index in rows" v-bind:key="index.repository_name+index.created_at">
-                    <td>{{index.repository_name}}</td>
-                    <td>{{index.created_at}}</td>
-                    <td>{{index.latest_push}}</td>
-            </tr>
-        </tbody>
-        </table>
+        <br>
+        <input v-if="isInputVis" id="dtlCode">
     </div>
 </template>
 
@@ -31,7 +17,7 @@ export default {
     name: 'Speed',
     data: () => {
         return {
-            isTableVis : false,
+            isInputVis : false,
             isLoading : false,
             rows : {
                 repository_name: '{{repository_name}}',
@@ -42,26 +28,26 @@ export default {
     },
     methods: {
         insertData(){ 
-          let tokenInput = this.$refs.tokenInput.value
-          fetch('http://localhost:5000/token', {
+          let pbiInput = this.$refs.pbiInput.value
+          fetch('http://localhost:5000/query', {
             method: 'POST',
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json'
         },
-        body: JSON.stringify({tokenInput: tokenInput})
+        body: JSON.stringify({pbiInput: pbiInput})
         });
-        this.$refs.tokenInput.value = []
+        this.$refs.pbiInput.value = []
         this.pasteData()
         },
         pasteData(){
             this.isLoading = true
-            api.getResource('/get_statistics')
+            api.getResource('/dtl_transform')
                 .then((data) => {
                 // eslint-disable-next-line no-console
                 //console.log(data)
-            this.isTableVis = true    
-            this.rows = data
+            this.isInputVis = true    
+            let dtlCode = data
             console.log(data)
             this.isLoading = false
             })
@@ -101,10 +87,28 @@ table tbody td {
   border: 1px solid#7D82A8;
 }
 
-input {
+#pbiInput {
       text-align: center;
-      width:35%;
-      height:30px;
+      width:60%;
+      height:300px;
+      padding:5px 10px;
+      font-size: 12px;
+      color: black;
+      letter-spacing:1px;
+      background: #FFF;
+      border:2px solid #FFF;
+      margin-bottom:25px;
+      -webkit-transition:all .1s ease-in-out;
+      -moz-transition:all .1s ease-in-out;
+      -ms-transition:all .1s ease-in-out;
+      -o-transition:all .1s ease-in-out;
+      transition:all .1s ease-in-out;
+}
+
+#dtlCode {
+    text-align: center;
+      width:60%;
+      height:500px;
       padding:5px 10px;
       font-size: 12px;
       color: black;
@@ -120,7 +124,7 @@ input {
 }
 
 button {
-      width:15%;
+      width:20%;
       padding:5px 10px;
       font-size: 12px;
       letter-spacing:1px;
