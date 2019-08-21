@@ -4,10 +4,36 @@ def RemoveColumns(i, words):
 
 def TransformColumns(i, words):
     property = words[i+2].split('"')[1]
-    return '["remove", "%s"], ["add", "%s", ["upper", "_S.%s"]],' %(property, property, property)
+    return '["add", "%s", ["upper", "%s"]],' % (property, property)#'["remove", "%s"], ["add", "%s", ["upper", "_S.%s"]],' %(property, property, property)
 
 def TransformRows(i, words):
+	#test = ["hva", "er", "det", "som", "du", "vil"]
+	#print((" ").join(test))
+	#ss
+	j = 0
+	while j < 1000:
+		if words[i+j] == "each":
+			property = words[i+j+1].split("[")[1].split("]")[0]
+			if words[i+j+2] == "<>":
+				value = find_string(i+j+3, words)
+				return '["filter", ["neq", "_S.%s", "%s"]],' %(property, value)
+			if words[i+j+2] == "=":
+				value = find_string(i+j+3, words)
+				return '["filter", ["eq", "_S.%s", "%s"]],' %(property, value)
+		j += 1
 	return None
+
+def find_string(k, words):
+	value_found = False
+	l = k
+	while not value_found:
+		if ")" in words[l]:
+			print((" ").join(words[k:l+1]))
+			ss
+			value = (" ").join(words[k:l+1]).split('"')[1]
+			break
+		l += 1
+	return value
 
 
 """

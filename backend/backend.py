@@ -10,7 +10,10 @@ app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}}, 
 headers={'Access-Control-Request-Headers', 'Content-Type', 'Access-Control-Allow-Origin'})
 
-#text_example = 'let Kilde = Csv.Documents(File.Contents("C:Userserik1DownloadsSampleCSVFile_2kb.csv"),[Delimiter=",", Columns=10, Encoding=1252, QuoteStyle=QuoteStyle.None]), #"Fjernede kolonner" = Table.RemoveColumns(Kilde, {"Column1"}), #"Text med store bokstaver" = Table.TransformColumns(#"Fjernede kolonner", {{"Column2", Text.Upper, type text}}), #"Filtrerte dader" = Table.SelectRows(#"Text med store bokstaver", each ([column2] <> "G.E. LONGER-LIFE INDOOR RECESSED FLOODLIGHT BULBS")), #"Filtrerte rader1" = Table.SelectRows(#"Filtrerte rader", each [Column2] = "SSN") in #"Text med store bokstaver"'
+#text_example = 'let Kilde = Csv.Documents(File.Contents("C:Userserik1DownloadsSampleCSVFile_2kb.csv"),[Delimiter=",", Columns=10, Encoding=1252, QuoteStyle=QuoteStyle.None]), #"Fjernede kolonner" = Table.RemoveColumns(Kilde, {"Column9"} in #"Text med store bokstaver"'
+#text_example = 'let Kilde = Csv.Documents(File.Contents("C:Userserik1DownloadsSampleCSVFile_2kb.csv"),[Delimiter=",", Columns=10, Encoding=1252, QuoteStyle=QuoteStyle.None]), #"Fjernede kolonner" = Table.RemoveColumns(Kilde, {"Column9"}), #"Text med store bokstaver" = Table.TransformColumns(#"Fjernede kolonner", {{"Column2", Text.Upper, type text}}) in #"Text med store bokstaver"'
+#text_example = 'let Kilde = Csv.Documents(File.Contents("C:Userserik1DownloadsSampleCSVFile_2kb.csv"),[Delimiter=",", Columns=10, Encoding=1252, QuoteStyle=QuoteStyle.None]), #"Fjernede kolonner" = Table.RemoveColumns(Kilde, {"Column9"}), #"Text med store bokstaver" = Table.TransformColumns(#"Fjernede kolonner", {{"Column2", Text.Upper, type text}}), #"Filtrerte rader" = Table.SelectRows(#"Text med store bokstaver", each ([Column1] <> "1")) in #"Text med store bokstaver"'
+text_example = 'let Kilde = Csv.Documents(File.Contents("C:Userserik1DownloadsSampleCSVFile_2kb.csv"),[Delimiter=",", Columns=10, Encoding=1252, QuoteStyle=QuoteStyle.None]), #"Fjernede kolonner" = Table.RemoveColumns(Kilde, {"Column9"}), #"Text med store bokstaver" = Table.TransformColumns(#"Fjernede kolonner", {{"Column2", Text.Upper, type text}}), #"Filtrerte rader" = Table.SelectRows(#"Text med store bokstaver", each ([Column1] <> "1")), #"Filtrerte rader1" = Table.SelectRows(#"Filtrerte rader", each [Column1] = "3") in #"Text med store bokstaver"'
 #words = text_example.split()
 
 
@@ -27,9 +30,9 @@ def query_func():
 
 @app.route('/dtl_transform', methods=['GET'])
 def dtl_transform():
-    global query
-    query_resp = query
-    #query_resp = text_example
+    #global query
+    #query_resp = query
+    query_resp = text_example
     dtl_code = str()
     dtl_prefix = '"transform": {"type": "dtl","rules":{"default": [["copy", "*"],'
     dtl_postfix = ']]}}'
@@ -41,18 +44,16 @@ def dtl_transform():
                 dtl_code += RemoveColumns(i, words)
             if command == "TransformColumns":
                 dtl_code += TransformColumns(i, words)
-            #if command == "SelectRows":
-            #    print(words[i+1])
-            #    ss
-            #    dtl_code += TransformRows(i, words)
+            if command == "SelectRows":
+                dtl_code += TransformRows(i, words)
 
     if dtl_code == str():
         print("No transformations detected!")
         sys.exit()
     dtl_code = dtl_prefix + dtl_code[:-2] + dtl_postfix
-    #print({'text': dtl_code})
-    #return "hei"#({'text': dtl_code})
-    return ({'text': dtl_code})
+    print({'text': dtl_code})
+    return "hei"#({'text': dtl_code})
+    #return ({'text': dtl_code})
 
 
 if __name__ == '__main__':
