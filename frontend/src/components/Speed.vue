@@ -1,20 +1,14 @@
 <template>
     <div id="Speed" v-on:keyup.enter="insertData">
         <h1>Power Query to DTL Converter</h1>
-        <input name="pbiInput" ref='pbiInput' value="Paste in your Power Query code snippet here..." id="pbiInput">
+        <input name="pbiInput" ref='pbiInput' value="Paste in your code snippet here..." id="pbiInput">
         <br>
         <button v-on:click.prevent="insertData">Submit query and make DTL</button>
         <br>
         <img v-if='isLoading' src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" alt="Loading GIF">
         <br>
-        <!--<textarea v-if="isInputVis" id="dtlCode" {{ rows }}></textarea>-->
-        <table v-if="isInputVis" id=dtlCode>
-        <tbody>
-            <tr v-for="index in rows" v-bind:key="index.object">
-                    <td>{{index.object}}</td>
-            </tr>
-        </tbody>
-        </table>
+        <!--<textarea v-if="isInputVis" id="dtlCode" v-bind:textarea="rows.object"></textarea>-->
+        <span v-if="isInputVis">{{rows.object}}</span>     
     </div>
 </template>
 
