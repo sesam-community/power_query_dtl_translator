@@ -21,10 +21,13 @@ def transform(query):
 			if command == "RemoveColumns":
 				property = words[i+1].split('"')[1]
 				dtl_code += '["remove", %s],' %property
-			elif command == "TransformColumns":
+			if command == "TransformColumns":
 				property = words[i+2].split('"')[1]
 				dtl_code += '["remove", "%s"],' %property
 				dtl_code += '["add", %s, ["upper", _S.%s]],' %(property, property)
+	if dtl_code == str():
+		print("No transformations detected!")
+		sys.exit()
 	return dtl_code[:-2]
 
 @app.route('/query', methods=['POST'])
@@ -38,8 +41,9 @@ def query():
 def dtl_transform():
 	global query
 	dtl_code = transform(query)
-
 	return jsonify(dtl_code.json())
+
+
 if __name__ == '__main__':
 
     # This is used when running locally. Gunicorn is used to run the
