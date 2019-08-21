@@ -7,8 +7,8 @@ Vue.config.productionTip = false
 Vue.use(VueRouter)
 
 const routes = [
-  { path: '/token', component: Speed },
-  { path: '/get_statistics', component: Speed }
+  { path: '/query', component: Speed },
+  { path: '/dtl_transform', component: Speed }
 ]
 
 const router = new VueRouter({

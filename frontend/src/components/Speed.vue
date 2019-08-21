@@ -18,12 +18,7 @@ export default {
     data: () => {
         return {
             isInputVis : false,
-            isLoading : false,
-            rows : {
-                repository_name: '{{repository_name}}',
-                created_at: '{{created_at}}',
-                latest_push: '{{latest_push}}'
-            }  
+            isLoading : false 
         }
     },
     methods: {

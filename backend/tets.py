@@ -8,8 +8,8 @@ app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}}, 
 headers={'Access-Control-Request-Headers', 'Content-Type', 'Access-Control-Allow-Origin'})
 
-text_example = 'let Kilde = Csv.Documents(File.Contents("C:Userserik1DownloadsSampleCSVFile_2kb.csv"),[Delimiter=",", Columns=10, Encoding=1252, QuoteStyle=QuoteStyle.None]), #"Fjernede kolonner" = Table.RemoveColumns(Kilde, {"Column1"}), #"Text med store bokstaver" = Table.TransformColumns(#"Fjernede kolonner", {{"Column2", Text.Upper, type text}}) in #"Tetx med store bokstaver"'
-words = text_example.split()
+#text_example = 'let Kilde = Csv.Documents(File.Contents("C:Userserik1DownloadsSampleCSVFile_2kb.csv"),[Delimiter=",", Columns=10, Encoding=1252, QuoteStyle=QuoteStyle.None]), #"Fjernede kolonner" = Table.RemoveColumns(Kilde, {"Column1"}), #"Text med store bokstaver" = Table.TransformColumns(#"Fjernede kolonner", {{"Column2", Text.Upper, type text}}) in #"Tetx med store bokstaver"'
+#words = text_example.split()
 
 def transform(query):
 	dtl_code = str()
@@ -31,14 +31,16 @@ def transform(query):
 		sys.exit()
 	return dtl_prefix + dtl_code[:-2] + dtl_postfix
 
+
 @app.route('/query', methods=['POST'])
 @cross_origin()
 def query_func():
-    reponse = request.json()
+    response = request.json
     global query
     query = str(response["pbiInput"])
     print(query)
     return "Successfull"
+
 
 @app.route('/dtl_transform', methods=['GET'])
 def dtl_transform():
