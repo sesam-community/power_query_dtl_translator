@@ -33,10 +33,12 @@ def transform(query):
 
 @app.route('/query', methods=['POST'])
 @cross_origin()
-def query():
-	reponse = request.json()
-	global query
-	query = str(response["pbiInput"])
+def query_func():
+    reponse = request.json()
+    global query
+    query = str(response["pbiInput"])
+    print(query)
+    return "Successfull"
 
 @app.route('/dtl_transform', methods=['GET'])
 def dtl_transform():
