@@ -1,11 +1,12 @@
-from flask import Flask, request, jsonify, CORS, cross_origin
+from flask import Flask, request, jsonify
+from flask_cors import CORS, cross_origin
 import requests
 import json
 import sys
 
-app           = Flask(__name__)
-CORS(app, resources={r”/“: {“origins”: “”}},
-headers={‘Access-Control-Request-Headers’, ‘Content-Type’, ‘Access-Control-Allow-Origin’})
+app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "*"}}, 
+headers={'Access-Control-Request-Headers', 'Content-Type', 'Access-Control-Allow-Origin'})
 
 text_example = 'let Kilde = Csv.Documents(File.Contents("C:Userserik1DownloadsSampleCSVFile_2kb.csv"),[Delimiter=",", Columns=10, Encoding=1252, QuoteStyle=QuoteStyle.None]), #"Fjernede kolonner" = Table.RemoveColumns(Kilde, {"Column1"}), #"Text med store bokstaver" = Table.TransformColumns(#"Fjernede kolonner", {{"Column2", Text.Upper, type text}}) in #"Tetx med store bokstaver"'
 words = text_example.split()
