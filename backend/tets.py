@@ -1,11 +1,12 @@
-from flask import Flask, request, jsonify, CORS, cross_origin
+from flask import Flask, request, jsonify
+from flask_cors import CORS, cross_origin
 import requests
 import json
 import sys
 
-app           = Flask(__name__)
-CORS(app, resources={r”/“: {“origins”: “”}},
-headers={‘Access-Control-Request-Headers’, ‘Content-Type’, ‘Access-Control-Allow-Origin’})
+app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "*"}}, 
+headers={'Access-Control-Request-Headers', 'Content-Type', 'Access-Control-Allow-Origin'})
 
 dtl_prefix = '"transform": {"type": "dtl","rules":{"default": [["copy", "*"],'
 dtl_postfix = ']}}'
