@@ -7,7 +7,14 @@
         <br>
         <img v-if='isLoading' src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" alt="Loading GIF">
         <br>
-        <textarea v-if="isInputVis" id="dtlCode" v-model="text.object"></textarea>
+        <!--<textarea v-if="isInputVis" id="dtlCode" {{ rows }}></textarea>-->
+        <table v-if="isInputVis" id=dtlCode>
+        <tbody>
+            <tr v-for="index in rows" v-bind:key="index.object">
+                    <td>{{index.object}}</td>
+            </tr>
+        </tbody>
+        </table>
     </div>
 </template>
 
@@ -19,7 +26,7 @@ export default {
         return {
             isInputVis : false,
             isLoading : false,
-            text : {
+            rows : {
                 object: '{{text}}'
             }
         }
@@ -45,7 +52,7 @@ export default {
                 // eslint-disable-next-line no-console
                 //console.log(data)
             this.isInputVis = true    
-            this.text = data
+            this.rows = data
             console.log(data)
             this.isLoading = false
             })
