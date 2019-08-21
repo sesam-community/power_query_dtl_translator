@@ -8,13 +8,13 @@ app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}}, 
 headers={'Access-Control-Request-Headers', 'Content-Type', 'Access-Control-Allow-Origin'})
 
-dtl_prefix = '"transform": {"type": "dtl","rules":{"default": [["copy", "*"],'
-dtl_postfix = ']}}'
 text_example = 'let Kilde = Csv.Documents(File.Contents("C:Userserik1DownloadsSampleCSVFile_2kb.csv"),[Delimiter=",", Columns=10, Encoding=1252, QuoteStyle=QuoteStyle.None]), #"Fjernede kolonner" = Table.RemoveColumns(Kilde, {"Column1"}), #"Text med store bokstaver" = Table.TransformColumns(#"Fjernede kolonner", {{"Column2", Text.Upper, type text}}) in #"Tetx med store bokstaver"'
 words = text_example.split()
 
 def transform(query):
 	dtl_code = str()
+	dtl_prefix = '"transform": {"type": "dtl","rules":{"default": [["copy", "*"],'
+	dtl_postfix = ']}}'
 	words = query.split()
 	for i, word in enumerate(words):
 		if word[:5] == "Table":
@@ -29,7 +29,7 @@ def transform(query):
 	if dtl_code == str():
 		print("No transformations detected!")
 		sys.exit()
-	return dtl_code[:-2]
+	return dtl_prefix + dtl_code[:-2] + dtl_postfix
 
 @app.route('/query', methods=['POST'])
 @cross_origin()
