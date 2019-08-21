@@ -7,7 +7,7 @@
         <br>
         <img v-if='isLoading' src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" alt="Loading GIF">
         <br>
-        <input v-if="isInputVis" id="dtlCode">
+        <input v-if="isInputVis" id="dtlCode" :value="text.object">
     </div>
 </template>
 
@@ -18,7 +18,10 @@ export default {
     data: () => {
         return {
             isInputVis : false,
-            isLoading : false 
+            isLoading : false,
+            text : {
+                object: '{{text}}'
+            }
         }
     },
     methods: {
