@@ -1,11 +1,12 @@
 <template>
     <div id="Speed" v-on:keyup.enter="insertData">
-        <h1>Power Query to SESAM DTL Converter</h1>
+        <h1>Power Query to DTL Converter</h1>
         <input name="pbiInput" ref='pbiInput' value="Paste in your Power Query code snippet here..." id="pbiInput">
         <br>
         <button v-on:click.prevent="insertData">Submit query and make DTL</button>
         <br>
         <img v-if='isLoading' src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" alt="Loading GIF">
+        <br>
         <input v-if="isInputVis" id="dtlCode">
     </div>
 </template>
