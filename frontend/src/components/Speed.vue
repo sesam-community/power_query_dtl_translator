@@ -1,14 +1,15 @@
 <template>
     <div id="Speed" v-on:keyup.enter="insertData">
         <h1>Power Query to DTL Converter</h1>
-        <input name="pbiInput" ref='pbiInput' value="Paste in your code snippet here..." id="pbiInput">
+        <textarea name="pbiInput" ref='pbiInput' placeholder="Paste in your code snippet here..." id="pbiInput"></textarea>
         <br>
         <button v-on:click.prevent="insertData">Submit query and make DTL</button>
         <br>
         <img v-if='isLoading' src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" alt="Loading GIF">
         <br>
-        <!--<textarea v-if="isInputVis" id="dtlCode" v-bind:textarea="rows.object"></textarea>-->
-        <span v-if="isInputVis">{{rows.object}}</span>     
+        <!--<textarea v-if="isInputVis" id="dtlCode" v-model="rows.object" class="form-control"></textarea>-->
+        <!--<span v-if="isInputVis">{{rows.object}}</span>-->
+        <textarea v-if="isInputVis" id="dtlCode">{{ rows }}</textarea>    
     </div>
 </template>
 
@@ -21,7 +22,7 @@ export default {
             isInputVis : false,
             isLoading : false,
             rows : {
-                object: '{{text}}'
+                object: "{{transform}}"
             }
         }
     },
@@ -89,7 +90,7 @@ table tbody td {
 #pbiInput {
       text-align: center;
       width:60%;
-      height:300px;
+      height:200px;
       padding:5px 10px;
       font-size: 12px;
       color: black;
@@ -107,7 +108,7 @@ table tbody td {
 #dtlCode {
     text-align: center;
       width:60%;
-      height:500px;
+      height:400px;
       padding:5px 10px;
       font-size: 12px;
       color: black;

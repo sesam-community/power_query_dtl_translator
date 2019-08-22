@@ -50,7 +50,7 @@ def dtl_transform():
         print("No transformations detected!")
         sys.exit()
     dtl_code = dtl_prefix + dtl_code[:-2] + dtl_postfix
-    #print({'text': dtl_code})
+    print({'text': dtl_code})
     #return "hei"#({'text': dtl_code})
     return ({'text': dtl_code})
 
