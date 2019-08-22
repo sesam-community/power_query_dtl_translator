@@ -16,20 +16,45 @@ def TransformRows(i, words):
 			property = words[i+j+1].split("[")[1].split("]")[0]
 			if words[i+j+2] == "<>":
 				value = find_string(i+j+3, words)
-				return '["filter", ["neq", "_S.%s", "%s"]],' %(property, value)
+				if find_datatype(value) == "string":
+					return '["filter", ["neq", "_S.{}", "{}"]],'.format(property, value)
+				else:
+					return '["filter", ["neq", "_S.{}", {}]],'.format(property, value)
 			if words[i+j+2] == "=":
 				value = find_string(i+j+3, words)
-				return '["filter", ["eq", "_S.%s", "%s"]],' %(property, value)
+				if find_datatype(value) == "string":
+					return '["filter", ["eq", "_S.{}", "{}"]],'.format(property, value)
+				else:
+					return '["filter", ["eq", "_S.{}", {}]],'.format(property, value)
 		j += 1
 	return None
+
+
+def find_datatype(value):
+	numbers = [str(i) for i in range(10)]
+	found_letter = False
+	found_period = False
+	if len(value.split()) != 1:
+		return "string"
+	for sign in value:
+		if sign == ".":
+			found_period = True
+			continue
+		if sign not in numbers:
+			found_letter = True
+	if found_letter:
+		return "string"
+	if found_period:
+		return "float"
+	return "int"
 
 def find_string(k, words):
 	value_found = False
 	l = k
 	while not value_found:
 		if ")" in words[l]:
-			print((" ").join(words[k:l+1]))
-			ss
+			#print((" ").join(words[k:l+1]))
+			#ss
 			value = (" ").join(words[k:l+1]).split('"')[1]
 			break
 		l += 1
