@@ -11,6 +11,7 @@
         <!--<span v-if="isInputVis">{{rows.object}}</span>-->
         <div v-if="isInputVis">
             <h3>{{ rows }}</h3> 
+            <h4>Copy the above generated code snippet and paste in SESAM when constructing your pipe config in the transform section</h4>
         </div>
     </div>
 </template>
@@ -65,7 +66,8 @@ h1 {
 
 h3 {
     text-align: center;
-    white-space: pre-line;
+    white-space: nowrap;
+    word-break: initial;
 }
 
 #pbiInput {

@@ -49,14 +49,13 @@ def dtl_transform():
                 dtl_code += TransformRows(i, words)
 
     if dtl_code == str():
-        print("No transformations detected!")
-        sys.exit()
+        return ('You did not provide a proper code snippet. Please change your code snippet or ask for support.')
 
     dtl_code = dtl_prefix + dtl_code[:-2] + dtl_postfix
     #return "hei"#({'text': dtl_code})
     print('  "transform":{}\n {}'.format(" {", dtl_code))
     #return "hei"#({'text': dtl_code})
-    return jsonify({'  "transform":{}\n {}'.format(" {", dtl_code)})
+    return ('  "transform":{}\n {}'.format(" {", dtl_code))
 
 
 if __name__ == '__main__':
