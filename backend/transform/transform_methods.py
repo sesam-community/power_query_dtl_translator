@@ -7,6 +7,8 @@ def TransformColumns(i, words):
     return '["add","%s",["upper","%s"]],' % (property, property)#'["remove", "%s"], ["add", "%s", ["upper", "_S.%s"]],' %(property, property, property)
 
 def TransformRows(i, words):
+	prefix = '\n         '
+	filter_string = '\n          '
 	j = 0
 	while j < 1000:
 		if words[i+j] == "each":
@@ -14,15 +16,15 @@ def TransformRows(i, words):
 			if words[i+j+2] == "<>":
 				value = find_string(i+j+3, words)
 				if find_datatype(value) == "string":
-					return '["filter",["neq","_S.{}","{}"]],'.format(property, value)
+					return '{}["filter",{}["neq","_S.{}","{}"]{}],'.format(prefix, filter_string, property, value, prefix)
 				else:
-					return '["filter",["neq","_S.{}",{}]],'.format(property, value)
+					return '{}["filter",{}["neq","_S.{}",{}]{}],'.format(prefix, filter_string, property, value, prefix)
 			if words[i+j+2] == "=":
 				value = find_string(i+j+3, words)
 				if find_datatype(value) == "string":
-					return '["filter",["eq","_S.{}","{}"]],'.format(property, value)
+					return '{}["filter",{}["eq","_S.{}","{}"]{}],'.format(prefix, filter_string, property, value, prefix)
 				else:
-					return '["filter",["eq","_S.{}",{}]],'.format(property, value)
+					return '{}["filter",{}["eq","_S.{}",{}]{}],'.format(prefix, filter_string, property, value, prefix)
 		j += 1
 	return None
 

@@ -16,7 +16,7 @@ headers={'Access-Control-Request-Headers', 'Content-Type', 'Access-Control-Allow
 #text_example = 'let Kilde = Csv.Documents(File.Contents("C:Userserik1DownloadsSampleCSVFile_2kb.csv"),[Delimiter=",", Columns=10, Encoding=1252, QuoteStyle=QuoteStyle.None]), #"Fjernede kolonner" = Table.RemoveColumns(Kilde, {"Column9"}), #"Text med store bokstaver" = Table.TransformColumns(#"Fjernede kolonner", {{"Column2", Text.Upper, type text}}), #"Filtrerte rader" = Table.SelectRows(#"Text med store bokstaver", each ([Column1] <> "1")), #"Filtrerte rader1" = Table.SelectRows(#"Filtrerte rader", each [Column1] = "3") in #"Text med store bokstaver"'
 #words = text_example.split()
 
-
+#text_example = 'let    #"Filtrerte rader" = Table.SelectRows(Kilde, each [Column4] = "613") in   #"Filtrerte rader"'
 
 @app.route('/query', methods=['POST'])
 @cross_origin()
@@ -34,8 +34,9 @@ def dtl_transform():
     query_resp = query
     #query_resp = text_example
     dtl_code = str()
-    dtl_prefix = '{"type":"dtl","rules":{"default":[["copy","*"],'
-    dtl_postfix = ']]}}'
+    dtl_prefix = '    "type": "dtl", \n     "rules": { \n       "default": [ \n         ["copy","*"],'
+    dtl_postfix = '] \n       {} \n     {} \n   {}'.format("]", "}", "}")
+    #dtl_postfix = '\n          {}]}}'.format("]")
     words = query_resp.split()
     for i, word in enumerate(words):
         if word[:5] == "Table":
@@ -50,10 +51,12 @@ def dtl_transform():
     if dtl_code == str():
         print("No transformations detected!")
         sys.exit()
+
     dtl_code = dtl_prefix + dtl_code[:-2] + dtl_postfix
-    #print({'text': dtl_code})
+    print('  "transform":{}\n {}'.format(" {", dtl_code))
+
     #return "hei"#({'text': dtl_code})
-    return ({'text': dtl_code})
+    return ({'  "transform":{}\n {}'.format(" {", dtl_code)})
 
 
 if __name__ == '__main__':
