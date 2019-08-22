@@ -33,7 +33,7 @@ def dtl_transform():
     query_resp = query
     #query_resp = text_example
     dtl_code = str()
-    dtl_prefix = '"transform": {"type": "dtl","rules":{"default": [["copy", "*"],'
+    dtl_prefix = '{"type":"dtl","rules":{"default":[["copy","*"],'
     dtl_postfix = ']]}}'
     words = query_resp.split()
     for i, word in enumerate(words):
