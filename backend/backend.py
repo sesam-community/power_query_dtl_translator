@@ -17,7 +17,6 @@ headers={'Access-Control-Request-Headers', 'Content-Type', 'Access-Control-Allow
 #words = text_example.split()
 
 
-
 @app.route('/query', methods=['POST'])
 @cross_origin()
 def query_func():
