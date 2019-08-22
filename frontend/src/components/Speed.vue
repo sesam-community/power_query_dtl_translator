@@ -9,7 +9,9 @@
         <br>
         <!--<textarea v-if="isInputVis" id="dtlCode" v-model="rows.object" class="form-control"></textarea>-->
         <!--<span v-if="isInputVis">{{rows.object}}</span>-->
-        <textarea v-if="isInputVis" id="dtlCode">{{ rows }}</textarea>    
+        <div v-if="isInputVis">
+            <h3>{{ rows }}</h3> 
+        </div>
     </div>
 </template>
 
@@ -60,55 +62,16 @@ export default {
 h1 {
     color: blue;
 }
-table {
-    margin: auto;
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+
+h3 {
     text-align: center;
-    margin: center;
-}
-
-table th {
-  text-transform: uppercase;
-  font-size: 17px;
-  color: blue;
-  padding: 10px;
-  min-width: 30px;
-  border-bottom: 2px solid #7D82A8;
-  border: 2px;
-}
-
-table td {
-  padding: 8px;
-}
-
-table tbody td {
-  border: 1px solid#7D82A8;
+    white-space: pre-line;
 }
 
 #pbiInput {
       text-align: center;
       width:60%;
       height:200px;
-      padding:5px 10px;
-      font-size: 12px;
-      color: black;
-      letter-spacing:1px;
-      background: #FFF;
-      border:2px solid #FFF;
-      margin-bottom:25px;
-      -webkit-transition:all .1s ease-in-out;
-      -moz-transition:all .1s ease-in-out;
-      -ms-transition:all .1s ease-in-out;
-      -o-transition:all .1s ease-in-out;
-      transition:all .1s ease-in-out;
-}
-
-#dtlCode {
-    text-align: center;
-      width:60%;
-      height:400px;
       padding:5px 10px;
       font-size: 12px;
       color: black;

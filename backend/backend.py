@@ -50,9 +50,9 @@ def dtl_transform():
         print("No transformations detected!")
         sys.exit()
     dtl_code = dtl_prefix + dtl_code[:-2] + dtl_postfix
-    print({'text': dtl_code})
+    print({'transform': dtl_code})
     #return "hei"#({'text': dtl_code})
-    return ({'text': dtl_code})
+    return jsonify({'transform': dtl_code})
 
 
 if __name__ == '__main__':
