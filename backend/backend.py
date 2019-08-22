@@ -56,7 +56,7 @@ def dtl_transform():
     print('  "transform":{}\n {}'.format(" {", dtl_code))
 
     #return "hei"#({'text': dtl_code})
-    return ({'  "transform":{}\n {}'.format(" {", dtl_code)})
+    return jsonify({'  "transform":{}\n {}'.format(" {", dtl_code)})
 
 
 if __name__ == '__main__':
