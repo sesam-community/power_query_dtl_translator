@@ -10,7 +10,7 @@
     "stay_a_while": "yarn serve"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "express": "^4.17.1",
     "package.json": "^2.0.1",
     "vue": "^2.6.10",
